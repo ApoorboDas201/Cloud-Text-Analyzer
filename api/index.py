@@ -5,26 +5,28 @@ app = Flask(__name__)
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
-    result = ""
     sentiment = ""
+    word_count = 0
+    subjectivity = ""
     
     if request.method == 'POST':
         user_text = request.form.get('text_input')
         if user_text:
-            # The "Cloud Logic": Analyzing text sentiment and translating
             blob = TextBlob(user_text)
             
-            # 1. Sentiment Analysis (Is the text positive or negative?)
+            # 1. Sentiment Analysis
             polarity = blob.sentiment.polarity
             if polarity > 0: sentiment = "Positive 😊"
             elif polarity < 0: sentiment = "Negative ☹️"
             else: sentiment = "Neutral 😐"
             
-            # 2. Translation (Example: Translate to Spanish)
-            try:
-                result = str(blob.translate(to="es"))
-            except:
-                result = "Translation service busy, but analysis complete!"
+            # 2. Subjectivity (Fact vs Opinion)
+            sub = blob.sentiment.subjectivity
+            if sub > 0.5: subjectivity = "Opinion-based 💭"
+            else: subjectivity = "Fact-based 📊"
+            
+            # 3. Basic Logic
+            word_count = len(user_text.split())
 
     return render_template_string('''
     <!DOCTYPE html>
@@ -36,21 +38,22 @@ def home():
     <body class="bg-dark text-white p-5">
         <div class="container bg-secondary p-5 rounded shadow" style="max-width: 800px;">
             <h1 class="text-warning">☁️ Cloud Text Intelligence</h1>
-            <p>Paste text below to analyze sentiment and translate via Cloud APIs.</p>
+            <p>PaaS Demo: Serverless Sentiment & Logic Analysis</p>
             <hr>
             <form method="POST">
-                <textarea name="text_input" class="form-control mb-3" rows="4" placeholder="Type something..."></textarea>
-                <button class="btn btn-warning w-100 fw-bold">PROCESS IN CLOUD</button>
+                <textarea name="text_input" class="form-control mb-3" rows="4" placeholder="Type a sentence here..." required></textarea>
+                <button class="btn btn-warning w-100 fw-bold">ANALYZE IN CLOUD</button>
             </form>
             
             {% if sentiment %}
             <div class="mt-4 p-3 bg-dark rounded">
-                <h4>Results:</h4>
+                <h4 class="text-warning">Cloud Processing Results:</h4>
                 <p><strong>Sentiment:</strong> {{ sentiment }}</p>
-                <p><strong>Spanish Translation:</strong> {{ result }}</p>
+                <p><strong>Perspective:</strong> {{ subjectivity }}</p>
+                <p><strong>Cloud Word Count:</strong> {{ word_count }} words</p>
             </div>
             {% endif %}
         </div>
     </body>
     </html>
-    ''', sentiment=sentiment, result=result)
+    ''', sentiment=sentiment, subjectivity=subjectivity, word_count=word_count)
