@@ -6,7 +6,7 @@ def advanced_sentiment_logic(text):
     # Expanded Weighted Dictionary for B.Tech Level Analysis
     scores = {
         # Highly Positive (+3)
-        'excellent': 3, 'amazing': 3, 'perfect': 3, 'extraordinary': 3, 'outstanding': 3, 'spectacular': 3, 'love': 3, 'flawless': 3,
+        'wonderful': 3, 'excellent': 3, 'amazing': 3, 'perfect': 3, 'extraordinary': 3, 'outstanding': 3, 'spectacular': 3, 'love': 3, 'flawless': 3,
         # Positive (+1 to +2)
         'good': 1, 'nice': 1, 'happy': 1, 'success': 2, 'working': 1, 'fast': 1, 'great': 2, 'awesome': 2, 'smart': 2, 'cool': 1,
         'efficient': 2, 'reliable': 2, 'stable': 2, 'helpful': 1, 'brilliant': 2, 'innovative': 2, 'satisfied': 2, 'smooth': 1,
