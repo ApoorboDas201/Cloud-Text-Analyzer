@@ -3,7 +3,7 @@ from flask import Flask, render_template_string, request
 app = Flask(__name__)
 
 def advanced_sentiment_logic(text):
-    # Expanded Weighted Dictionary for B.Tech Level Analysis
+    # Expanded Weighted Dictionary
     scores = {
         # Highly Positive (+3)
         'wonderful': 3, 'excellent': 3, 'amazing': 3, 'perfect': 3, 'extraordinary': 3, 'outstanding': 3, 'spectacular': 3, 'love': 3, 'flawless': 3,
